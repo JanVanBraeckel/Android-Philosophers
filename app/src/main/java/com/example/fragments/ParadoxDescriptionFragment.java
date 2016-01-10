@@ -5,6 +5,7 @@ import android.net.Uri;
 import android.os.Bundle;
 import android.app.Fragment;
 import android.support.annotation.Nullable;
+import android.support.v7.app.AppCompatActivity;
 import android.view.LayoutInflater;
 import android.view.View;
 import android.view.ViewGroup;
@@ -25,9 +26,10 @@ public class ParadoxDescriptionFragment extends android.support.v4.app.Fragment 
 
     public static String PARADOXINDEX = "PARADOXINDEX";
 
-    public ParadoxDescriptionFragment(){}
+    public ParadoxDescriptionFragment() {
+    }
 
-    public static ParadoxDescriptionFragment newInstance(){
+    public static ParadoxDescriptionFragment newInstance() {
         ParadoxDescriptionFragment fragment = new ParadoxDescriptionFragment();
         return fragment;
     }
@@ -42,9 +44,12 @@ public class ParadoxDescriptionFragment extends android.support.v4.app.Fragment 
         View layout = inflater.inflate(R.layout.fragment_paradox_description, container, false);
         ButterKnife.bind(this, layout);
 
-        if(savedInstanceState != null){
+        if (savedInstanceState != null) {
             currentIndex = savedInstanceState.getInt(PARADOXINDEX);
         }
+
+        ((AppCompatActivity) getActivity()).getSupportActionBar().setDisplayHomeAsUpEnabled(true);
+
 
         return layout;
     }
@@ -53,12 +58,11 @@ public class ParadoxDescriptionFragment extends android.support.v4.app.Fragment 
     public void onStart() {
         super.onStart();
         Bundle argsBundle = getArguments();
-        if(argsBundle != null){
+        if (argsBundle != null) {
             int id = argsBundle.getInt(PARADOXINDEX);
             currentIndex = id;
             updateParadoxDescription(currentIndex);
-        }
-        else if(currentIndex != -1){
+        } else if (currentIndex != -1) {
             updateParadoxDescription(currentIndex);
         }
     }
@@ -66,12 +70,12 @@ public class ParadoxDescriptionFragment extends android.support.v4.app.Fragment 
     @Override
     public void onSaveInstanceState(Bundle outState) {
         super.onSaveInstanceState(outState);
-        if(currentIndex != -1){
+        if (currentIndex != -1) {
             outState.putInt(PARADOXINDEX, currentIndex);
         }
     }
 
-    public void updateParadoxDescription(int i){
+    public void updateParadoxDescription(int i) {
         description.setText(Paradoxes.ParadoxDescription[i]);
     }
 }
